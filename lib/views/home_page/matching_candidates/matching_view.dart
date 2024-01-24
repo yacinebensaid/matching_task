@@ -51,23 +51,26 @@ class _MatchingButtonState extends State<MatchingButton> {
                   ),
                   const SizedBox(height: 16.0),
                   // Using ListView.builder for efficient building of the list
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: candidates.length,
-                      itemBuilder: (context, index) {
-                        Candidate candidate = candidates[index];
-                        return ListTile(
-                          title: Text(candidate.name),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (String kpi in candidate.kpis) Text(kpi),
-                            ],
+                  candidates.isNotEmpty
+                      ? Expanded(
+                          child: ListView.builder(
+                            itemCount: candidates.length,
+                            itemBuilder: (context, index) {
+                              Candidate candidate = candidates[index];
+                              return ListTile(
+                                title: Text(candidate.name),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    for (String kpi in candidate.kpis)
+                                      Text(kpi),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                        )
+                      : const Text('No condidates'),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: () {

@@ -18,7 +18,7 @@ class _HomePageViewState extends State<HomePageView> {
         ),
         backgroundColor: Colors.white,
         body: const Center(
-          child: MatchingButtton(),
+          child: MatchingButton(),
         ));
   }
 }
