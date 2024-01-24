@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:matching_task/services/candidate_service.dart';
 import 'package:matching_task/utilities/candidates.dart';
 
-class MatchingButtton extends StatefulWidget {
-  const MatchingButtton({super.key});
+class MatchingButton extends StatefulWidget {
+  const MatchingButton({Key? key}) : super(key: key);
 
   @override
-  _MatchingButttonState createState() => _MatchingButttonState();
+  _MatchingButtonState createState() => _MatchingButtonState();
 }
 
-class _MatchingButttonState extends State<MatchingButtton> {
+class _MatchingButtonState extends State<MatchingButton> {
   // the make of candidates list
   List<Candidate> candidates = [];
 
@@ -29,7 +29,7 @@ class _MatchingButttonState extends State<MatchingButtton> {
     });
   }
 
-  // Ihave chosen to display the candidate list in Dialog, I have tried to make the corners round and clean
+  // I have chosen to display the candidate list in Dialog, I have tried to make the corners round and clean
   void showMatchedCandidates() {
     showDialog(
       context: context,
@@ -50,10 +50,13 @@ class _MatchingButttonState extends State<MatchingButtton> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                   ),
                   const SizedBox(height: 16.0),
-                  Column(
-                    children: [
-                      for (Candidate candidate in candidates)
-                        ListTile(
+                  // Using ListView.builder for efficient building of the list
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: candidates.length,
+                      itemBuilder: (context, index) {
+                        Candidate candidate = candidates[index];
+                        return ListTile(
                           title: Text(candidate.name),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,8 +64,9 @@ class _MatchingButttonState extends State<MatchingButtton> {
                               for (String kpi in candidate.kpis) Text(kpi),
                             ],
                           ),
-                        ),
-                    ],
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
@@ -85,7 +89,7 @@ class _MatchingButttonState extends State<MatchingButtton> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // the button with "Match" text on it which dispalyes the Dialog
+        // the button with "Match" text on it which displays the Dialog
         ElevatedButton(
           onPressed: () {
             // Handle the "Match" button click
